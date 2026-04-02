@@ -1,5 +1,5 @@
-#ifndef UART
-#define UART
+#ifndef UART_H
+#define UART_H
 
 #define UART0 0x10000000
 

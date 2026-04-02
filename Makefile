@@ -26,6 +26,10 @@ debug: kernel.elf
 clean:
 	rm -f *.o kernel.elf
 
+test:
+	make
+	make run
+
 update:
 	git add .
 	git commit
