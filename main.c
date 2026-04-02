@@ -1,14 +1,11 @@
 #include "include/uart.h"
 void main(){
-    sendText("Testing OS\n");
+    char line_buf[64];
+    
     while(1){
-        char ch = 0;
-        ch = getChar();
-        if(ch == '\r'){ 
-            sendChar('\r');
-            sendChar('\n');
-        }else{
-            sendChar(ch);
-        }
+        getLine(line_buf, 64);
+        puts("You Typed:\n");
+        puts(line_buf);
+        putchar('\n');
     }
 }

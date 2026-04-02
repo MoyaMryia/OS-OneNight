@@ -56,7 +56,7 @@ int getLine(char *buf, int maxlen){
     int i = 0;
     char ch = 0;
     while(1){
-        ch = getchar();
+        ch = getChar();
         if(ch == '\r'){
             buf[i] = '\0';
             putchar('\r');
