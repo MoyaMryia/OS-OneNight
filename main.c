@@ -1,12 +1,12 @@
 #include "include/standio.h"
 void main(){
     puts("WOZMON 2026 on RISC-V.\n");
-    char buf[64]; char hex_buf[64];
+    char buf[512]; char hex_buf[64];
     unsigned long addr = 0;
     int first_run = 1;
     while(1){
         putchar('\\');
-        getline(buf, 64);
+        getline(buf, 512);
         char *midpoint = 0;
         char *writepoint = 0;
         int findf = 0;
@@ -80,23 +80,33 @@ void main(){
             } else {
                 puts("RUN ADDR ERR\n");
             }
-        }else if (findf == 0 && writepoint != 0){
-            unsigned long w_addr = hextoNum(buf);
-            unsigned int  w_val  = (unsigned int)hextoNum(writepoint);
-            if (w_addr != (unsigned long)-1 && w_val != (unsigned int)-1) {
-                unsigned int *p = (unsigned int *)(w_addr & ~3L);
+        } else if (findf == 0 && writepoint != 0) {
+            unsigned long base_addr = hextoNum(buf);
+            char *curr_data = writepoint;
+            int count = 0;
+        
+            while (*curr_data != '\0') {
+                while (*curr_data == ' ') curr_data++;
+                if (*curr_data == '\0') break;
+            
+                char *next_space = curr_data;
+                while (*next_space != ' ' && *next_space != '\0') next_space++;
+
+                char saved_char = *next_space;
+                *next_space = '\0';
+            
+                unsigned int w_val = (unsigned int)hextoNum(curr_data);
+                unsigned int *p = (unsigned int *)((base_addr + count * 4) & ~3L);
                 *p = w_val;
-                puts("STORED ");
+            
                 numToHex((unsigned long)p, hex_buf);
-                puts(hex_buf);
-                puts(" = ");
+                puts(hex_buf); puts(": ");
                 numToHex(w_val, hex_buf);
-                puts(hex_buf);
-                putchar('\n');
-                addr = (unsigned long)p;
-                first_run = 0;
-            } else {
-                puts("STORE ERR\n");
+                puts(hex_buf); putchar('\n');
+            
+                *next_space = saved_char;
+                curr_data = next_space;
+                count++;
             }
         }else{
             puts("ERR\n");
