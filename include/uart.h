@@ -21,4 +21,5 @@ void puts(char *str);
 
 int getSingleChar();
 char getChar();
+int getLine(char *buf, int maxlen);
 #endif
