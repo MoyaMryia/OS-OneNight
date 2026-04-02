@@ -1,26 +1,14 @@
-int sendSingleChar(char ch){
-    volatile char *uart = (volatile char*)0x10000000;
-    volatile char *chk = (volatile char*)0x10000005;
-    if((*chk & 0x20) != 0){
-        *uart = ch;
-        return 0;
-    }else{
-        return 1;
-    }
-}
-
-void sendChar(char ch){
-    while(sendSingleChar(ch)!=0);
-}
-
+#include "include/uart.h"
 void main(){
-    sendChar('H');
-    sendChar('e');
-    sendChar('l');
-    sendChar('l');
-    sendChar('o');
-    sendChar('\n');
+    sendText("Testing OS\n");
     while(1){
-
+        char ch = 0;
+        ch = getChar();
+        if(ch == '\r'){ 
+            sendChar('\r');
+            sendChar(ch);
+        }else{
+            sendChar(ch);
+        }
     }
 }
