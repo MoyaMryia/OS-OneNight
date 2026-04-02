@@ -17,6 +17,7 @@ int getline(char *buf, int maxlen){
         ch = getchar();
         if(ch == '\r'){
             buf[i] = '\0';
+            buf[maxlen - 1] = '\0'; //我不知道什么时候我会把这个给冲了 先这么写
             putchar('\r');
             putchar('\n');
             return i;
