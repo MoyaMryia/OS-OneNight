@@ -1,0 +1,24 @@
+CC = riscv64-unknown-elf-gcc
+OBJCOPY = riscv64-unknown-elf-objcopy
+OBJDUMP = riscv64-unknown-elf-objdump
+QEMU = qemu-system-riscv64
+
+CFLAGS = -march=rv64gc -mabi=lp64d -static -mcmodel=medany \
+         -fno-common -nostdlib -fno-builtin -ffreestanding \
+         -Wall -O0 -g
+
+SRCS = entry.S main.c
+OBJS = $(SRCS:.S=.o)
+OBJS := $(OBJS:.c=.o)
+
+kernel.elf: $(SRCS) linker.ld
+	$(CC) $(CFLAGS) -T linker.ld $(SRCS) -o kernel.elf
+
+run: kernel.elf
+	$(QEMU) -machine virt -nographic -bios none -kernel kernel.elf
+
+debug: kernel.elf
+	$(QEMU) -machine virt -nographic -bios none -kernel kernel.elf -S -gdb tcp::1234
+
+clean:
+	rm -f *.o kernel.elf
