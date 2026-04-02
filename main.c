@@ -6,7 +6,7 @@ void main(){
         ch = getChar();
         if(ch == '\r'){ 
             sendChar('\r');
-            sendChar(ch);
+            sendChar('\n');
         }else{
             sendChar(ch);
         }
