@@ -25,3 +25,8 @@ debug: kernel.elf
 
 clean:
 	rm -f *.o kernel.elf
+
+update:
+	git add .
+	git commit
+	git push
