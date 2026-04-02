@@ -14,12 +14,11 @@
 
 int sendSingleChar(char ch);
 void sendChar(char ch);
-void putchar(char ch);
+
 void sendText_f(char *str, unsigned int str_len);
 void sendText(char *str);
-void puts(char *str);
 
 int getSingleChar();
 char getChar();
-int getLine(char *buf, int maxlen);
+
 #endif

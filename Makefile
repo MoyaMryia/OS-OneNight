@@ -10,7 +10,7 @@ CFLAGS = -march=rv64gc -mabi=lp64d -static -mcmodel=medany \
          -fno-common -nostdlib -fno-builtin -ffreestanding \
          -I$(INC_DIR) -Wall -O0 -g 
 
-SRCS = entry.S main.c $(SRC_DIR)/uart.c
+SRCS = entry.S main.c $(SRC_DIR)/uart.c $(SRC_DIR)/standio.c
 OBJS = $(SRCS:.S=.o)
 OBJS := $(OBJS:.c=.o)
 
